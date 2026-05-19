@@ -178,27 +178,29 @@
 
         <h2>Parent Portal</h2>
 
-        <form id="portal-form">
+ <form id="portal-form">
 
-            <input
-                type="text"
-                id="student-id"
-                placeholder="Student ID"
-                required
-            >
+    <input
+        type="text"
+        id="student-id"
+        placeholder="Enter Student ID"
+        required
+    >
 
-            <input
-                type="password"
-                id="student-pin"
-                placeholder="PIN"
-                required
-            >
+    <input
+        type="password"
+        id="student-pin"
+        placeholder="Enter PIN"
+        required
+    >
 
-            <button type="submit">
-                Access Student Report
-            </button>
+    <button type="submit">
+        Access Student Report
+    </button>
 
-        </form>
+ </form>
+
+<div id="result-box"></div>
 
     </section>
 
