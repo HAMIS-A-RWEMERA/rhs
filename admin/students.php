@@ -9,7 +9,27 @@ if(!isset($_SESSION['admin_logged_in'])){
 include("../config/db.php");
 
 /* FETCH STUDENTS */
-$studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
+$search = "";
+
+if(isset($_GET['search'])){
+    $search = $_GET['search'];
+}
+
+$sql = "SELECT * FROM students";
+
+if(!empty($search)){
+
+    $sql .= " WHERE
+
+    student_id LIKE '%$search%'
+    OR full_name LIKE '%$search%'
+    OR class_name LIKE '%$search%'";
+
+}
+
+$sql .= " ORDER BY id DESC";
+
+$studentsQuery = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +72,20 @@ $studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
             + Add New Student
         </a>
     </div>
+    <form class="search-form" method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search student..."
+        value="<?php echo $search; ?>"
+    >
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
 
     <div class="table-container">
 
@@ -60,6 +94,7 @@ $studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Photo</th>
                     <th>Student ID</th>
                     <th>Full Name</th>
                     <th>Class</th>
@@ -75,6 +110,14 @@ $studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
 
                 <tr>
                     <td><?php echo $student['id']; ?></td>
+                    <td>
+
+    <img
+        src="../uploads/students/<?php echo $student['profile_photo']; ?>"
+        class="student-photo"
+    >
+
+</td>
 
                     <td><?php echo $student['student_id']; ?></td>
 

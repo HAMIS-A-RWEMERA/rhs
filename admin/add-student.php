@@ -20,7 +20,22 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
     $parent_phone = mysqli_real_escape_string($conn, $_POST['parent_phone']);
     $fees_balance = mysqli_real_escape_string($conn, $_POST['fees_balance']);
+    /* IMAGE UPLOAD */
 
+$photoName = "default.png";
+
+if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === 0){
+
+    $fileTmp = $_FILES['profile_photo']['tmp_name'];
+
+    $fileName = time() . "_" . $_FILES['profile_photo']['name'];
+
+    $destination = "../uploads/students/" . $fileName;
+
+    move_uploaded_file($fileTmp, $destination);
+
+    $photoName = $fileName;
+}
     $sql = "INSERT INTO students (student_id, full_name, class_name, gender, parent_phone, fees_balance)
             VALUES ('$student_id', '$full_name', '$class_name', '$gender', '$parent_phone', '$fees_balance')";
 
@@ -83,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     <?php endif; ?>
 
-    <form class="student-form" method="POST">
+    <form method="POST" enctype="multipart/form-data" class="student-form">
 
         <div class="form-group">
             <label>Student ID</label>
@@ -119,7 +134,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             <label>Fees Balance</label>
             <input type="number" name="fees_balance">
         </div>
+<div class="form-group">
 
+    <label>Student Profile Photo</label>
+
+    <input
+        type="file"
+        name="profile_photo"
+        accept="image/*"
+    >
+
+</div>
         <button type="submit">
             Save Student
         </button>

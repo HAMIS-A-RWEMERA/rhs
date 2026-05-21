@@ -435,3 +435,55 @@ tr:hover{
     text-decoration:none;
     font-size:0.85rem;
 }
+/* ==========================================
+   SEARCH SYSTEM
+========================================== */
+
+.search-form{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.search-form input{
+    flex:1;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.05);
+
+    color:white;
+
+    font-size:1rem;
+}
+
+.search-form button{
+    background:linear-gradient(135deg,#00f2fe,#00c3ff);
+
+    border:none;
+
+    padding:14px 22px;
+
+    border-radius:10px;
+
+    color:#001b2e;
+
+    font-weight:700;
+
+    cursor:pointer;
+}
+.student-photo{
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:2px solid rgba(255,255,255,0.15);
+}
