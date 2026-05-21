@@ -88,7 +88,7 @@ $studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
 
                     <td>
 
-                        <a class="edit-btn" href="#">
+                        <a class="edit-btn" href="edit-student.php?id=<?php echo $student['id']; ?>">
                             Edit
                         </a>
 
