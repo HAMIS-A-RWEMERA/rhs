@@ -36,8 +36,8 @@ if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === 0){
 
     $photoName = $fileName;
 }
-    $sql = "INSERT INTO students (student_id, full_name, class_name, gender, parent_phone, fees_balance)
-            VALUES ('$student_id', '$full_name', '$class_name', '$gender', '$parent_phone', '$fees_balance')";
+    $sql = "INSERT INTO students (student_id, full_name, class_name, gender, parent_phone, fees_balance, profile_photo)
+            VALUES ('$student_id', '$full_name', '$class_name', '$gender', '$parent_phone', '$fees_balance', '$photoName')";
 
     // 3. Changed $connection to $conn to match your db.php file
     if(mysqli_query($conn, $sql)){

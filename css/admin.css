@@ -477,13 +477,10 @@ tr:hover{
     cursor:pointer;
 }
 .student-photo{
-    width:55px;
-
-    height:55px;
-
-    border-radius:50%;
-
-    object-fit:cover;
-
-    border:2px solid rgba(255,255,255,0.15);
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #00f2fe;
+    box-shadow: 0 0 10px rgba(0,242,254,0.3);
 }

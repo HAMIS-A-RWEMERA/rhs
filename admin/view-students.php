@@ -63,6 +63,7 @@ $result = mysqli_query($conn, $sql);
             <thead>
                 <tr>
                     <th>ID</th>
+                     <th>Photo</th>
                     <th>Student ID</th>
                     <th>Full Name</th>
                     <th>Class</th>
@@ -80,6 +81,15 @@ $result = mysqli_query($conn, $sql);
 
                     <td><?php echo $student['id']; ?></td>
 
+                     <td>
+
+        <img
+            src="../uploads/students/<?php echo $student['profile_photo']; ?>"
+            alt="Student Photo"
+            class="student-photo"
+        >
+
+    </td>
                     <td><?php echo $student['student_id']; ?></td>
 
                     <td><?php echo $student['full_name']; ?></td>
