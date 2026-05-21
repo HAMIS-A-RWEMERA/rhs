@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "rhs_portal";
+$database = "rhs";
 
 $conn = mysqli_connect($host, $user, $password, $database);
 

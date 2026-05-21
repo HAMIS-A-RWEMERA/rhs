@@ -1,0 +1,361 @@
+/* ==========================================================================
+   RHS ADMIN SYSTEM STYLESHEET
+   ========================================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#081120;
+    color:#ffffff;
+    min-height:100vh;
+}
+
+/* ==========================================================================
+   LOGIN PAGE
+   ========================================================================== */
+
+.login-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)),
+    url('../assets/images/school.jpg');
+
+    background-size:cover;
+    background-position:center;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+
+    background:rgba(13, 27, 42, 0.92);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(10px);
+
+    padding:40px;
+    border-radius:16px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+}
+
+.login-box h2{
+    text-align:center;
+    margin-bottom:30px;
+    font-size:2rem;
+    color:#8ecae6;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#d6d6d6;
+}
+
+.form-group input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+
+    background:#10243a;
+    color:white;
+    font-size:1rem;
+}
+
+.form-group input:focus{
+    outline:2px solid #00b4d8;
+}
+
+.login-box button{
+    width:100%;
+    padding:14px;
+
+    background:#00b4d8;
+    color:white;
+
+    border:none;
+    border-radius:8px;
+
+    font-size:1rem;
+    font-weight:bold;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.login-box button:hover{
+    background:#0096c7;
+}
+
+/* ==========================================================================
+   DASHBOARD HEADER
+   ========================================================================== */
+
+.admin-header{
+    background:#0d1b2a;
+
+    padding:18px 5%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.admin-logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.admin-logo img{
+    width:55px;
+    height:55px;
+}
+
+.admin-logo h1{
+    font-size:1.3rem;
+}
+
+.admin-logo p{
+    color:#8ecae6;
+    font-size:0.85rem;
+}
+
+.admin-nav ul{
+    display:flex;
+    list-style:none;
+    gap:20px;
+}
+
+.admin-nav a{
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.admin-nav a:hover{
+    color:#00b4d8;
+}
+
+/* ==========================================================================
+   DASHBOARD MAIN
+   ========================================================================== */
+
+.dashboard{
+    width:100%;
+    min-height:100vh;
+
+    padding:50px 5%;
+
+    background:
+    radial-gradient(circle at top right, rgba(0,180,216,0.15), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(142,202,230,0.1), transparent 25%),
+    #081120;
+}
+
+.dashboard-title{
+    margin-bottom:35px;
+}
+
+.dashboard-title h2{
+    font-size:2.2rem;
+    margin-bottom:10px;
+}
+
+.dashboard-title p{
+    color:#c5c5c5;
+}
+
+/* ==========================================================================
+   DASHBOARD CARDS
+   ========================================================================== */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:25px;
+}
+
+.dashboard-card{
+    background:rgba(16, 36, 58, 0.9);
+
+    padding:35px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    transition:0.35s ease;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,0.25);
+
+    backdrop-filter:blur(10px);
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+
+    border-color:#00b4d8;
+
+    box-shadow:
+    0 15px 35px rgba(0,180,216,0.18);
+}
+
+.dashboard-card h3{
+    color:#8ecae6;
+    margin-bottom:15px;
+}
+
+.dashboard-card p{
+    font-size:2rem;
+    font-weight:bold;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.admin-footer{
+    margin-top:70px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+
+    color:#a5a5a5;
+
+    background:#06101c;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media(max-width:768px){
+
+   .admin-header{
+    background:rgba(13, 27, 42, 0.92);
+
+    padding:20px 5%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(12px);
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+    .admin-nav ul{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+.student-form{
+    max-width:700px;
+
+    background:rgba(16, 36, 58, 0.92);
+
+    padding:40px;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.student-form select{
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#10243a;
+
+    color:white;
+}
+
+.success-message{
+    background:#0f5132;
+
+    color:#d1e7dd;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    margin-bottom:25px;
+}
+/* ==========================================================================
+   STUDENTS TABLE
+   ========================================================================== */
+
+.table-container{
+    overflow-x:auto;
+}
+
+.students-table{
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:rgba(16, 36, 58, 0.92);
+
+    border-radius:18px;
+
+    overflow:hidden;
+}
+
+.students-table th{
+    background:#0d1b2a;
+
+    color:#8ecae6;
+
+    padding:18px;
+
+    text-align:left;
+
+    font-size:0.95rem;
+}
+
+.students-table td{
+    padding:18px;
+
+    border-top:1px solid rgba(255,255,255,0.05);
+
+    color:#f1f1f1;
+}
+
+.students-table tr:hover{
+    background:rgba(255,255,255,0.03);
+}

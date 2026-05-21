@@ -6,7 +6,7 @@
 
     <title>Rusumo High School | Official Portal</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
                 <li><a href="#student-life">Student Life</a></li>
                 <li><a href="#portal">Portal</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="admin.php">Admin</a></li>
+                <li><a href="auth/login.php">Admin</a></li>
             </ul>
         </nav>
 

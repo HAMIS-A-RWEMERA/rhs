@@ -14,13 +14,13 @@ if(!isset($_SESSION['admin_logged_in'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RHS Admin Dashboard</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
-<header>
+<header class="admin-header">
 
-    <div class="logo-area">
+    <div class="admin-logo">
         <img src="../assets/images/logo.png" alt="RHS Logo">
 
         <div>
@@ -29,10 +29,12 @@ if(!isset($_SESSION['admin_logged_in'])){
         </div>
     </div>
 
-    <nav>
+    <nav class="admin-nav">
         <ul>
             <li><a href="../index.php">Main Website</a></li>
             <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="add-student.php">Add Student</a></li>
+            <li><a href="view-students.php">Students</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -41,7 +43,7 @@ if(!isset($_SESSION['admin_logged_in'])){
 
 <main class="dashboard">
 
-    <div class="section-title">
+    <div class="class="dashboard-title">
         <h2>Administrator Dashboard</h2>
         <p>
             Welcome back,
@@ -49,7 +51,7 @@ if(!isset($_SESSION['admin_logged_in'])){
         </p>
     </div>
 
-    <div class="dashboard-cards">
+    <div class="dashboard-grid">
 
         <div class="dashboard-card">
             <h3>Total Students</h3>
