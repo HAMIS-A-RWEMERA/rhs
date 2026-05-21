@@ -8,8 +8,8 @@ if(!isset($_SESSION['admin_logged_in'])){
 
 include("../config/db.php");
 
-$sql = "SELECT * FROM students ORDER BY id DESC";
-$result = mysqli_query($conn, $sql);
+/* FETCH STUDENTS */
+$studentsQuery = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ $result = mysqli_query($conn, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Students</title>
+    <title>Manage Students | RHS Admin</title>
 
     <link rel="stylesheet" href="../css/admin.css">
 </head>
@@ -25,40 +25,37 @@ $result = mysqli_query($conn, $sql);
 
 <header class="admin-header">
 
-    <div class="admin-logo">
-
-        <img src="../assets/logo.png" alt="Logo">
+    <div class="logo-section">
+        <img src="../assets/images/logo.png" alt="RHS Logo">
 
         <div>
-            <h1>RHS Admin</h1>
-            <p>Student Records System</p>
+            <h1>Student Management</h1>
+            <p>Rusumo High School CMS</p>
         </div>
-
     </div>
 
-    <nav class="admin-nav">
-
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="add-student.php">Add Student</a></li>
-            <li><a href="view-students.php">Students</a></li>
-            <li><a href="../auth/logout.php">Logout</a></li>
-        </ul>
-
+    <nav>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="students.php">Students</a>
+        <a href="../index.php">Main Website</a>
+        <a href="../auth/logout.php">Logout</a>
     </nav>
 
 </header>
 
-<main class="dashboard">
+<main class="dashboard-container">
 
-    <div class="dashboard-title">
-        <h2>All Students</h2>
-        <p>Manage registered student records.</p>
+    <div class="dashboard-top">
+        <h2>All Registered Students</h2>
+
+        <a href="add-student.php" class="add-btn">
+            + Add New Student
+        </a>
     </div>
 
     <div class="table-container">
 
-        <table class="students-table">
+        <table>
 
             <thead>
                 <tr>
@@ -68,16 +65,15 @@ $result = mysqli_query($conn, $sql);
                     <th>Class</th>
                     <th>Gender</th>
                     <th>Parent Phone</th>
-                    <th>Fees Balance</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
             <tbody>
 
-            <?php while($student = mysqli_fetch_assoc($result)): ?>
+            <?php while($student = mysqli_fetch_assoc($studentsQuery)): ?>
 
                 <tr>
-
                     <td><?php echo $student['id']; ?></td>
 
                     <td><?php echo $student['student_id']; ?></td>
@@ -91,9 +87,20 @@ $result = mysqli_query($conn, $sql);
                     <td><?php echo $student['parent_phone']; ?></td>
 
                     <td>
-                        <?php echo number_format($student['fees_balance']); ?> RWF
-                    </td>
 
+                        <a class="edit-btn" href="#">
+                            Edit
+                        </a>
+
+                        <a 
+                           class="delete-btn"
+                           href="delete-student.php?id=<?php echo $student['id']; ?>"
+                           onclick="return confirm('Delete this student permanently?')"
+                        >
+                            Delete
+                        </a>
+
+                    </td>
                 </tr>
 
             <?php endwhile; ?>

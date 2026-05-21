@@ -359,3 +359,79 @@ body{
 .students-table tr:hover{
     background:rgba(255,255,255,0.03);
 }
+/* ==========================================
+   STUDENT MANAGEMENT TABLE
+========================================== */
+
+.dashboard-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.dashboard-top h2{
+    color:white;
+    font-size:2rem;
+}
+
+.add-btn{
+    background:linear-gradient(135deg,#00f2fe,#00c3ff);
+    color:#001b2e;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.table-container{
+    background:rgba(255,255,255,0.03);
+    border-radius:20px;
+    overflow:auto;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:rgba(255,255,255,0.05);
+}
+
+th{
+    padding:18px;
+    text-align:left;
+    color:#8fd3ff;
+    font-size:0.95rem;
+}
+
+td{
+    padding:18px;
+    border-top:1px solid rgba(255,255,255,0.05);
+    color:white;
+}
+
+tr:hover{
+    background:rgba(255,255,255,0.02);
+}
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    margin-right:8px;
+    font-size:0.85rem;
+}
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:0.85rem;
+}

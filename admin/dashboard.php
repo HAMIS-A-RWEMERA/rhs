@@ -5,6 +5,15 @@ if(!isset($_SESSION['admin_logged_in'])){
     header("Location: ../auth/login.php");
     exit();
 }
+
+include("../config/db.php");
+
+/* TOTAL STUDENTS QUERY */
+$studentQuery = mysqli_query($conn, "SELECT COUNT(*) AS total_students FROM students");
+
+$studentData = mysqli_fetch_assoc($studentQuery);
+
+$totalStudents = $studentData['total_students'];
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +64,7 @@ if(!isset($_SESSION['admin_logged_in'])){
 
         <div class="dashboard-card">
             <h3>Total Students</h3>
-            <p>620</p>
+            <p><?php echo $totalStudents; ?></p>
         </div>
 
         <div class="dashboard-card">
