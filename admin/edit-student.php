@@ -1,54 +1,62 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
+require_admin();
 
-if(!isset($_SESSION['admin_logged_in'])){
-    header("Location: ../auth/login.php");
-    exit();
-}
-
-include("../config/db.php");
+include __DIR__ . '/../config/db.php';
 
 /* GET STUDENT ID */
-if(!isset($_GET['id'])){
+if (!isset($_GET['id'])) {
     header("Location: students.php");
     exit();
 }
 
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 
 /* FETCH STUDENT */
-$query = mysqli_query(
-    $conn,
-    "SELECT * FROM students WHERE id = '$id'"
-);
+$stmt = mysqli_prepare($conn, "SELECT * FROM students WHERE id = ?");
+mysqli_stmt_bind_param($stmt, "i", $id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$student = mysqli_fetch_assoc($result);
+mysqli_stmt_close($stmt);
 
-$student = mysqli_fetch_assoc($query);
+if (!$student) {
+    header("Location: students.php");
+    exit();
+}
 
 /* UPDATE PROCESS */
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $student_id = $_POST['student_id'];
-    $full_name = $_POST['full_name'];
-    $class_name = $_POST['class_name'];
-    $gender = $_POST['gender'];
-    $parent_phone = $_POST['parent_phone'];
+    verify_csrf();
 
-    mysqli_query(
-        $conn,
-        "UPDATE students SET
+    $student_id   = trim($_POST['student_id'] ?? '');
+    $full_name    = trim($_POST['full_name'] ?? '');
+    $class_name   = trim($_POST['class_name'] ?? '');
+    $gender       = trim($_POST['gender'] ?? '');
+    $parent_phone = trim($_POST['parent_phone'] ?? '');
 
-        student_id='$student_id',
-        full_name='$full_name',
-        class_name='$class_name',
-        gender='$gender',
-        parent_phone='$parent_phone'
+    $stmt = mysqli_prepare($conn, "UPDATE students SET
+        student_id = ?,
+        full_name = ?,
+        class_name = ?,
+        gender = ?,
+        parent_phone = ?
+        WHERE id = ?");
 
-        WHERE id='$id'"
-    );
+    mysqli_stmt_bind_param($stmt, "sssssi",
+        $student_id, $full_name, $class_name,
+        $gender, $parent_phone, $id);
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 
     header("Location: students.php");
     exit();
 }
+
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Student</title>
 
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
@@ -90,6 +98,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <h2>Edit Student</h2>
 
         <form method="POST" class="student-form">
+            <?php echo csrf_field(); ?>
 
             <div class="form-group">
                 <label>Student ID</label>
@@ -97,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <input
                     type="text"
                     name="student_id"
-                    value="<?php echo $student['student_id']; ?>"
+                    value="<?php echo h($student['student_id']); ?>"
                     required
                 >
             </div>
@@ -108,7 +117,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <input
                     type="text"
                     name="full_name"
-                    value="<?php echo $student['full_name']; ?>"
+                    value="<?php echo h($student['full_name']); ?>"
                     required
                 >
             </div>
@@ -119,7 +128,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <input
                     type="text"
                     name="class_name"
-                    value="<?php echo $student['class_name']; ?>"
+                    value="<?php echo h($student['class_name']); ?>"
                     required
                 >
             </div>
@@ -130,13 +139,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <select name="gender" required>
 
                     <option value="Male"
-                        <?php if($student['gender'] === 'Male') echo 'selected'; ?>
+                        <?php if ($student['gender'] === 'Male') echo 'selected'; ?>
                     >
                         Male
                     </option>
 
                     <option value="Female"
-                        <?php if($student['gender'] === 'Female') echo 'selected'; ?>
+                        <?php if ($student['gender'] === 'Female') echo 'selected'; ?>
                     >
                         Female
                     </option>
@@ -150,7 +159,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <input
                     type="text"
                     name="parent_phone"
-                    value="<?php echo $student['parent_phone']; ?>"
+                    value="<?php echo h($student['parent_phone']); ?>"
                 >
             </div>
 

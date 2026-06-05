@@ -53,6 +53,15 @@ if (searchInput) {
    STUDENT PORTAL SYSTEM
 ========================================= */
 
+/**
+ * Safely escape HTML to prevent XSS when building result display.
+ */
+function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 const portalForm = document.getElementById("portal-form");
 
 if (portalForm) {
@@ -73,7 +82,7 @@ if (portalForm) {
 
         const resultBox = document.getElementById("result-box");
 
-        resultBox.innerHTML = "Loading student data...";
+        resultBox.textContent = "Loading student data...";
 
         try {
 
@@ -99,22 +108,22 @@ if (portalForm) {
 
                 resultBox.innerHTML = `
                     <div class="student-result">
-                        <h3>${data.student.name}</h3>
+                        <h3>${escapeHtml(data.student.name)}</h3>
 
                         <p><strong>Class:</strong>
-                        ${data.student.class}</p>
+                        ${escapeHtml(data.student.class)}</p>
 
                         <p><strong>Division:</strong>
-                        ${data.student.division}</p>
+                        ${escapeHtml(data.student.division)}</p>
 
                         <p><strong>Score:</strong>
-                        ${data.student.score}</p>
+                        ${escapeHtml(data.student.score)}</p>
 
                         <p><strong>Conduct:</strong>
-                        ${data.student.conduct}</p>
+                        ${escapeHtml(data.student.conduct)}</p>
 
                         <p><strong>Balance:</strong>
-                        ${data.student.balance} RWF</p>
+                        ${escapeHtml(data.student.balance)} RWF</p>
                     </div>
                 `;
 
@@ -122,7 +131,7 @@ if (portalForm) {
 
                 resultBox.innerHTML = `
                     <div class="error-box">
-                        ${data.message}
+                        ${escapeHtml(data.message)}
                     </div>
                 `;
 

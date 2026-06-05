@@ -1,15 +1,20 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
 
 $error = "";
 
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    verify_csrf();
 
-    // Demo login credentials
-    if($username === "admin" && $password === "1234"){
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    // Demo login credentials (Phase 1 will replace with DB-backed users)
+    if ($username === "admin" && $password === "1234") {
+
+        regenerate_session();
 
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_username'] = $username;
@@ -42,13 +47,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         <h2>Administrator Login</h2>
 
-        <?php if($error): ?>
+        <?php if ($error): ?>
             <p style="color:red; margin-bottom:15px;">
-                <?php echo $error; ?>
+                <?php echo h($error); ?>
             </p>
         <?php endif; ?>
 
         <form method="POST">
+            <?php echo csrf_field(); ?>
 
             <div class="form-group">
                 <label>Username</label>

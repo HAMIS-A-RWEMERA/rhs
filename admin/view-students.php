@@ -1,12 +1,9 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
+require_admin();
 
-if(!isset($_SESSION['admin_logged_in'])){
-    header("Location: ../auth/login.php");
-    exit();
-}
-
-include("../config/db.php");
+include __DIR__ . '/../config/db.php';
 
 $sql = "SELECT * FROM students ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
@@ -27,7 +24,7 @@ $result = mysqli_query($conn, $sql);
 
     <div class="admin-logo">
 
-        <img src="../assets/logo.png" alt="Logo">
+        <img src="../assets/images/logo.png" alt="Logo">
 
         <div>
             <h1>RHS Admin</h1>
@@ -63,7 +60,7 @@ $result = mysqli_query($conn, $sql);
             <thead>
                 <tr>
                     <th>ID</th>
-                     <th>Photo</th>
+                    <th>Photo</th>
                     <th>Student ID</th>
                     <th>Full Name</th>
                     <th>Class</th>
@@ -75,33 +72,32 @@ $result = mysqli_query($conn, $sql);
 
             <tbody>
 
-            <?php while($student = mysqli_fetch_assoc($result)): ?>
+            <?php while ($student = mysqli_fetch_assoc($result)): ?>
 
                 <tr>
 
-                    <td><?php echo $student['id']; ?></td>
-
-                     <td>
-
-        <img
-            src="../uploads/students/<?php echo $student['profile_photo']; ?>"
-            alt="Student Photo"
-            class="student-photo"
-        >
-
-    </td>
-                    <td><?php echo $student['student_id']; ?></td>
-
-                    <td><?php echo $student['full_name']; ?></td>
-
-                    <td><?php echo $student['class_name']; ?></td>
-
-                    <td><?php echo $student['gender']; ?></td>
-
-                    <td><?php echo $student['parent_phone']; ?></td>
+                    <td><?php echo (int) $student['id']; ?></td>
 
                     <td>
-                        <?php echo number_format($student['fees_balance']); ?> RWF
+                        <img
+                            src="../uploads/students/<?php echo h($student['profile_photo']); ?>"
+                            alt="Student Photo"
+                            class="student-photo"
+                        >
+                    </td>
+
+                    <td><?php echo h($student['student_id']); ?></td>
+
+                    <td><?php echo h($student['full_name']); ?></td>
+
+                    <td><?php echo h($student['class_name']); ?></td>
+
+                    <td><?php echo h($student['gender']); ?></td>
+
+                    <td><?php echo h($student['parent_phone']); ?></td>
+
+                    <td>
+                        <?php echo number_format((float) $student['fees_balance']); ?> RWF
                     </td>
 
                 </tr>

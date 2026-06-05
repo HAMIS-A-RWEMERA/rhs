@@ -1,8 +1,12 @@
 <?php
+/**
+ * Database configuration — copy this file to db.php and fill in your real credentials.
+ * NEVER commit db.php with real credentials to version control.
+ */
 
 $host = "localhost";
-$user = "root";
-$password = "";
+$user = "your_db_user";
+$password = "your_db_password";
 $database = "rhs";
 
 $conn = mysqli_connect($host, $user, $password, $database);

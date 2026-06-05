@@ -16,7 +16,7 @@
     <header class="header">
 
         <div class="logo-area">
-            <img src="assets/logo.png" alt="Rusumo High School Logo">
+            <img src="assets/images/logo.png" alt="Rusumo High School Logo">
 
             <div>
                 <h1>Rusumo High School</h1>
@@ -58,7 +58,7 @@
             <p>
                 Rusumo High School combines academic excellence,
                 discipline, innovation, and leadership to prepare
-                students for Rwanda’s future and the global stage.
+                students for Rwanda's future and the global stage.
             </p>
 
             <div class="hero-buttons">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="hero-image">
-            <img src="assets/headmaster.jpg" alt="Rusumo High School Campus">
+            <img src="assets/images/headmaster.jpg" alt="Rusumo High School Campus">
         </div>
 
     </section>
@@ -178,29 +178,29 @@
 
         <h2>Parent Portal</h2>
 
- <form id="portal-form">
+        <form id="portal-form">
 
-    <input
-        type="text"
-        id="student-id"
-        placeholder="Enter Student ID"
-        required
-    >
+            <input
+                type="text"
+                id="student-id"
+                placeholder="Enter Student ID"
+                required
+            >
 
-    <input
-        type="password"
-        id="student-pin"
-        placeholder="Enter PIN"
-        required
-    >
+            <input
+                type="password"
+                id="student-pin"
+                placeholder="Enter PIN"
+                required
+            >
 
-    <button type="submit">
-        Access Student Report
-    </button>
+            <button type="submit">
+                Access Student Report
+            </button>
 
- </form>
+        </form>
 
-<div id="result-box"></div>
+        <div id="result-box"></div>
 
     </section>
 
@@ -222,7 +222,7 @@
     <footer class="footer">
 
         <p>
-            © 2026 Rusumo High School —
+            &copy; 2026 Rusumo High School &mdash;
             All Rights Reserved
         </p>
 

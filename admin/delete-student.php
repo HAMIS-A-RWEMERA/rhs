@@ -1,27 +1,27 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
+require_admin();
 
-if(!isset($_SESSION['admin_logged_in'])){
-    header("Location: ../auth/login.php");
+include __DIR__ . '/../config/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: students.php");
     exit();
 }
 
-include("../config/db.php");
+verify_csrf();
 
-/* CHECK IF ID EXISTS */
-if(isset($_GET['id'])){
+$id = $_POST['id'] ?? '';
 
-    $id = $_GET['id'];
-
-    /* DELETE QUERY */
-    $deleteQuery = mysqli_query(
-        $conn,
-        "DELETE FROM students WHERE id = '$id'"
-    );
-
+if (!empty($id)) {
+    $stmt = mysqli_prepare($conn, "DELETE FROM students WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }
 
-/* REDIRECT BACK */
+mysqli_close($conn);
+
 header("Location: students.php");
 exit();
-?>
