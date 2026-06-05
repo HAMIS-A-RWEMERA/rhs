@@ -44,7 +44,7 @@ $totalStudents = $studentData['total_students'];
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="add-student.php">Add Student</a></li>
             <li><a href="view-students.php">Students</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="../auth/login.php">Logout</a></li>
         </ul>
     </nav>
 
