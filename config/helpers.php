@@ -60,14 +60,67 @@ function verify_csrf(): void
 }
 
 /**
- * Require admin login or redirect.
+ * Require that the user is logged in. Optionally restrict to specific roles.
+ *
+ * @param string|array|null $roles  Allowed role(s). null = any logged-in user.
+ *                                  Pass a string for one role, or an array for multiple.
  */
-function require_admin(): void
+function require_login(string|array|null $roles = null): void
 {
-    if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role'])) {
         header("Location: ../auth/login.php");
         exit();
     }
+
+    if ($roles !== null) {
+        $allowed = is_array($roles) ? $roles : [$roles];
+        if (!in_array($_SESSION['user_role'], $allowed, true)) {
+            http_response_code(403);
+            exit('Access denied. You do not have permission to view this page.');
+        }
+    }
+}
+
+/**
+ * Legacy compatibility: require admin login.
+ * Now delegates to the role-based system.
+ */
+function require_admin(): void
+{
+    require_login('admin');
+}
+
+/**
+ * Get the currently logged-in user's role.
+ */
+function current_role(): ?string
+{
+    return $_SESSION['user_role'] ?? null;
+}
+
+/**
+ * Get the currently logged-in user's display name.
+ */
+function current_user_name(): ?string
+{
+    return $_SESSION['user_fullname'] ?? null;
+}
+
+/**
+ * Get the currently logged-in user's ID.
+ */
+function current_user_id(): ?int
+{
+    return $_SESSION['user_id'] ?? null;
+}
+
+/**
+ * Check if the current user has one of the given roles.
+ */
+function has_role(string|array $roles): bool
+{
+    $allowed = is_array($roles) ? $roles : [$roles];
+    return in_array($_SESSION['user_role'] ?? '', $allowed, true);
 }
 
 /**

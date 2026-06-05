@@ -28,3 +28,16 @@ CREATE TABLE IF NOT EXISTS `students` (
 
 -- Note: The API (api/get_student.php) reads `fees_balance` as "balance" in its JSON output.
 -- In Phase 2 this table will be normalized (separate marks, discipline, finance tables).
+
+-- Users table for role-based authentication (Phase 1)
+CREATE TABLE IF NOT EXISTS `users` (
+    `id`            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `username`      VARCHAR(50)  NOT NULL UNIQUE,
+    `email`         VARCHAR(150) DEFAULT NULL,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `full_name`     VARCHAR(150) NOT NULL,
+    `role`          ENUM('admin','registrar','discipline_master','bursar','director_of_studies','teacher','parent') NOT NULL DEFAULT 'admin',
+    `is_active`     TINYINT(1)   NOT NULL DEFAULT 1,
+    `created_at`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

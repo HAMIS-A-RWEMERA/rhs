@@ -41,6 +41,9 @@ mysqli_close($conn);
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="add-student.php">Add Student</a></li>
             <li><a href="view-students.php">Students</a></li>
+            <?php if (has_role('admin')): ?>
+            <li><a href="manage-users.php">Users</a></li>
+            <?php endif; ?>
             <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -53,7 +56,10 @@ mysqli_close($conn);
         <h2>Administrator Dashboard</h2>
         <p>
             Welcome back,
-            <?php echo h($_SESSION['admin_username']); ?>
+            <?php echo h(current_user_name()); ?>
+            <span style="font-size:0.8em; color:#888;">
+                (<?php echo h(current_role()); ?>)
+            </span>
         </p>
     </div>
 
