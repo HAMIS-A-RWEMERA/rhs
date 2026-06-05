@@ -1,19 +1,16 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
+require_admin();
 
-if(!isset($_SESSION['admin_logged_in'])){
-    header("Location: ../auth/login.php");
-    exit();
-}
-
-include("../config/db.php");
+include __DIR__ . '/../config/db.php';
 
 /* TOTAL STUDENTS QUERY */
 $studentQuery = mysqli_query($conn, "SELECT COUNT(*) AS total_students FROM students");
-
 $studentData = mysqli_fetch_assoc($studentQuery);
-
 $totalStudents = $studentData['total_students'];
+
+mysqli_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +41,10 @@ $totalStudents = $studentData['total_students'];
             <li><a href="dashboard.php">Dashboard</a></li>
             <li><a href="add-student.php">Add Student</a></li>
             <li><a href="view-students.php">Students</a></li>
-            <li><a href="../auth/login.php">Logout</a></li>
+            <?php if (has_role('admin')): ?>
+            <li><a href="manage-users.php">Users</a></li>
+            <?php endif; ?>
+            <li><a href="../auth/logout.php">Logout</a></li>
         </ul>
     </nav>
 
@@ -52,11 +52,14 @@ $totalStudents = $studentData['total_students'];
 
 <main class="dashboard">
 
-    <div class="class="dashboard-title">
+    <div class="dashboard-title">
         <h2>Administrator Dashboard</h2>
         <p>
             Welcome back,
-            <?php echo $_SESSION['admin_username']; ?>
+            <?php echo h(current_user_name()); ?>
+            <span style="font-size:0.8em; color:#888;">
+                (<?php echo h(current_role()); ?>)
+            </span>
         </p>
     </div>
 
@@ -64,7 +67,7 @@ $totalStudents = $studentData['total_students'];
 
         <div class="dashboard-card">
             <h3>Total Students</h3>
-            <p><?php echo $totalStudents; ?></p>
+            <p><?php echo (int) $totalStudents; ?></p>
         </div>
 
         <div class="dashboard-card">

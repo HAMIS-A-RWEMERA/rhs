@@ -1,0 +1,18 @@
+# Uploaded files (keep the directory structure, ignore contents)
+uploads/students/*
+!uploads/students/.htaccess
+!uploads/students/.gitkeep
+
+# For production: copy config/db.sample.php → config/db.php with real credentials.
+# Uncomment the line below once you move to production credentials:
+# config/db.php
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Debug / test leftovers
+test.php

@@ -1,35 +1,24 @@
 <?php
-session_start();
+require_once __DIR__ . '/../config/helpers.php';
+start_secure_session();
+require_admin();
 
-if(!isset($_SESSION['admin_logged_in'])){
-    header("Location: ../auth/login.php");
-    exit();
-}
-
-include("../config/db.php");
+include __DIR__ . '/../config/db.php';
 
 /* FETCH STUDENTS */
-$search = "";
+$search = trim($_GET['search'] ?? '');
 
-if(isset($_GET['search'])){
-    $search = $_GET['search'];
+if (!empty($search)) {
+    $like = '%' . $search . '%';
+    $stmt = mysqli_prepare($conn, "SELECT * FROM students WHERE
+        student_id LIKE ? OR full_name LIKE ? OR class_name LIKE ?
+        ORDER BY id DESC");
+    mysqli_stmt_bind_param($stmt, "sss", $like, $like, $like);
+    mysqli_stmt_execute($stmt);
+    $studentsResult = mysqli_stmt_get_result($stmt);
+} else {
+    $studentsResult = mysqli_query($conn, "SELECT * FROM students ORDER BY id DESC");
 }
-
-$sql = "SELECT * FROM students";
-
-if(!empty($search)){
-
-    $sql .= " WHERE
-
-    student_id LIKE '%$search%'
-    OR full_name LIKE '%$search%'
-    OR class_name LIKE '%$search%'";
-
-}
-
-$sql .= " ORDER BY id DESC";
-
-$studentsQuery = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -72,20 +61,21 @@ $studentsQuery = mysqli_query($conn, $sql);
             + Add New Student
         </a>
     </div>
+
     <form class="search-form" method="GET">
 
-    <input
-        type="text"
-        name="search"
-        placeholder="Search student..."
-        value="<?php echo $search; ?>"
-    >
+        <input
+            type="text"
+            name="search"
+            placeholder="Search student..."
+            value="<?php echo h($search); ?>"
+        >
 
-    <button type="submit">
-        Search
-    </button>
+        <button type="submit">
+            Search
+        </button>
 
-</form>
+    </form>
 
     <div class="table-container">
 
@@ -106,42 +96,40 @@ $studentsQuery = mysqli_query($conn, $sql);
 
             <tbody>
 
-            <?php while($student = mysqli_fetch_assoc($studentsQuery)): ?>
+            <?php while ($student = mysqli_fetch_assoc($studentsResult)): ?>
 
                 <tr>
-                    <td><?php echo $student['id']; ?></td>
+                    <td><?php echo (int) $student['id']; ?></td>
+                    <td>
+                        <img
+                            src="../uploads/students/<?php echo h($student['profile_photo']); ?>"
+                            class="student-photo"
+                            alt="Photo"
+                        >
+                    </td>
+
+                    <td><?php echo h($student['student_id']); ?></td>
+
+                    <td><?php echo h($student['full_name']); ?></td>
+
+                    <td><?php echo h($student['class_name']); ?></td>
+
+                    <td><?php echo h($student['gender']); ?></td>
+
+                    <td><?php echo h($student['parent_phone']); ?></td>
+
                     <td>
 
-    <img
-        src="../uploads/students/<?php echo $student['profile_photo']; ?>"
-        class="student-photo"
-    >
-
-</td>
-
-                    <td><?php echo $student['student_id']; ?></td>
-
-                    <td><?php echo $student['full_name']; ?></td>
-
-                    <td><?php echo $student['class_name']; ?></td>
-
-                    <td><?php echo $student['gender']; ?></td>
-
-                    <td><?php echo $student['parent_phone']; ?></td>
-
-                    <td>
-
-                        <a class="edit-btn" href="edit-student.php?id=<?php echo $student['id']; ?>">
+                        <a class="edit-btn" href="edit-student.php?id=<?php echo (int) $student['id']; ?>">
                             Edit
                         </a>
 
-                        <a 
-                           class="delete-btn"
-                           href="delete-student.php?id=<?php echo $student['id']; ?>"
-                           onclick="return confirm('Delete this student permanently?')"
-                        >
-                            Delete
-                        </a>
+                        <form method="POST" action="delete-student.php" style="display:inline;"
+                              onsubmit="return confirm('Delete this student permanently?')">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="id" value="<?php echo (int) $student['id']; ?>">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
 
                     </td>
                 </tr>
